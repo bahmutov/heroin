@@ -67,4 +67,22 @@ describe('heroin', function () {
     heroin(foo, 'minus', staticDependencies);
     expect(foo.minus(runtimeDependencies)).to.equal(90);
   });
+
+  it('leaves the dependency object unchanged', function () {
+    var foo = {
+      minus: function (b, a) {
+        return a - b;
+      }
+    };
+    var staticDependencies = {
+      b: 10
+    };
+    var runtimeDependencies = {
+      a: 100
+    };
+
+    heroin(foo, 'minus', staticDependencies);
+    foo.minus(runtimeDependencies);
+    expect(runtimeDependencies.b).to.be(undefined);
+  });
 });

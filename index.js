@@ -29,7 +29,7 @@ function heroin(obj, methodName, dependencies) {
   // console.log('expected', expected);
 
   obj[methodName] = function (runTimeDependencies) {
-    runTimeDependencies = runTimeDependencies || {};
+    runTimeDependencies = _.clone(runTimeDependencies) || {};
     var deps = _.extend(runTimeDependencies, dependencies);
     // console.log('deps', deps);
     var parameters = expected.map(function (name) {

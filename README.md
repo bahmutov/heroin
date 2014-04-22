@@ -55,6 +55,19 @@ foo.getName({
 }); // 'foo hi'
 ```
 
+## Why?
+
+I was inspired by the simplicity of the reflection in JavaScript shown
+by [@iammerrick](https://twitter.com/iammerrick)
+in [JavaScript Dependency Injection](http://merrickchristensen.com/articles/javascript-dependency-injection.html).
+Still I felt there was too much extra code to be useful: both Merrick's and AngularJs
+dependency injection requires an external executor function to actually call the function.
+
+*Heroin* removes the external controller, instead directing parameters from dependency object
+into the appropriate named arguments. Simple.
+
+**Currently heroin is not minification safe**
+
 ### Small print
 
 Author: Gleb Bahmutov &copy; 2014

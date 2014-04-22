@@ -21,6 +21,16 @@ module.exports = function (grunt) {
         },
         src: ['test/*.js']
       }
+    },
+
+    watch: {
+      options: {
+        atBegin: true
+      },
+      all: {
+        files: ['*.js', 'test/*.js'],
+        tasks: ['jshint', 'test']
+      }
     }
   });
 

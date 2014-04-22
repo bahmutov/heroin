@@ -1,7 +1,7 @@
 {
   "name": "heroin",
   "description": "Dependency injection done right",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/bahmutov/heroin/issues"
@@ -14,6 +14,7 @@
   "devDependencies": {
     "grunt": "^0.4.4",
     "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
     "grunt-deps-ok": "^0.1.8",
     "grunt-mocha-test": "^0.10.2",
     "grunt-nice-package": "^0.4.0",
