@@ -5,9 +5,6 @@ function getExpectedArguments(fn) {
   expect(fn).to.be.a('function');
 
   var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
-  var FN_ARG_SPLIT = /,/;
-  var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
-  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
   var text = fn.toString();
   expect(text).to.be.a('string');
   var args = text.match(FN_ARGS)[1].split(',');
@@ -41,6 +38,6 @@ function heroin(obj, methodName, dependencies) {
     // console.log('parameters', parameters);
     return original.apply(obj, parameters);
   };
-};
+}
 
 module.exports = heroin;
