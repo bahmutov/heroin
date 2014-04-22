@@ -1,0 +1,23 @@
+{
+  "name": "heroin",
+  "version": "0.0.0",
+  "description": "Dependency injection done right",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dependency",
+    "injection",
+    "di",
+    "javascript"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "expect.js": "^0.3.1"
+  }
+}
