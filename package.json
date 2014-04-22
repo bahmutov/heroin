@@ -1,7 +1,7 @@
 {
   "name": "heroin",
   "description": "Dependency injection done right",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/bahmutov/heroin/issues"

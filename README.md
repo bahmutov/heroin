@@ -11,9 +11,9 @@
 *Heroin* decouples functions and methods from their arguments, making
 dynamic substitution a breeze.
 
-## Example
+## API
 
-### Inject into function
+### heroin(fn, values) - inject into function
 
 ```js
 function add(a, b) { return a + b; }
@@ -41,7 +41,7 @@ values.b = 2;
 adder(); // 102
 ```
 
-### Inject into method
+### heroin(obj, 'methodName', values) - inject into method
 
 Heroin is better when injecting into a method, because you do not need to keep
 separate proxy function - it replaces the original method.
