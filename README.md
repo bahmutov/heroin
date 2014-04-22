@@ -39,7 +39,8 @@ foo.getName(); // 'foo hello'
 
 ### Combined dependencies
 
-You can inject some dependencies right away
+You can inject some dependencies right away, and inject others
+at the call.
 
 ```js
 var dependencies = {
