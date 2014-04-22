@@ -5,9 +5,46 @@
 [![NPM][heroin-icon] ][heroin-url]
 
 [![Build status][heroin-ci-image] ][heroin-ci-url]
-[![Coverage Status][heroin-coverage-image]][heroin-coverage-url]
 [![dependencies][heroin-dependencies-image] ][heroin-dependencies-url]
 [![devdependencies][heroin-devdependencies-image] ][heroin-devdependencies-url]
+
+*Heroin* decouples functions and methods from their arguments, making
+dynamic substitution a breeze.
+
+## Example
+
+### Inject into function
+
+```js
+function add(a, b) { return a + b; }
+var values = {
+  a: 10,
+  b: 22
+};
+var adder = heroin(add, values);
+adder(); // 32
+```
+
+When injecting into a function, returns a new proxy function that can be called.
+The `heroin(add, values)` figures out that function `add` requires two arguments:
+`a` and `b` and looks them up in the passed `values` object.
+
+You can keep changing the values (dependencies) in the dependency object,
+calling the proxy function without any additional work. Same code as above,
+continued
+
+```js
+...
+adder(); // 32
+values.a = 100;
+values.b = 2;
+adder(); // 102
+```
+
+### Inject into method
+
+Heroin is better when injecting into a method, because you do not need to keep
+separate proxy function - it replaces the original method.
 
 ```js
 var foo = {
@@ -23,7 +60,27 @@ heroin(foo, 'getName', dependencies);
 foo.getName(); // 'foo'
 ```
 
-### Order does not matter
+### 2 injection points
+
+Heroin can inject dependencies during the proxy creation (when you call `heroin` on a function),
+and during the function execution (when you call the proxy function)
+
+```js
+function add(a, b) { return a + b; }
+var values = {
+  a: 10,
+  b: 22
+};
+var adder = heroin(add, values);
+var runtimeValues = {
+  b: 500
+};
+adder(runtimeValues); // 510
+```
+
+## Details
+
+### Argument order does not matter
 
 ```js
 getName: function (name, message) {
@@ -67,6 +124,77 @@ dependency injection requires an external executor function to actually call the
 into the appropriate named arguments. Simple.
 
 **Currently heroin is not minification safe**
+
+### QUnit example
+
+One thing that always bothered me about using
+[QUnit](http://api.qunitjs.com/module/) is the inability to have module specific
+state without a separate closure where all variables are accessible to every unit test
+
+```js
+(function () {
+  var a = 10, b = 20;
+  QUnit.module('example');
+  QUnit.test(function () {
+    // use a and b
+  });
+}());
+```
+
+I always wanted to have the ability to store test data in the module config
+and be able to explicitly inject into each unit test only the data it needs:
+
+```js
+QUnit.module('example', {
+  a: 10,
+  b: 20
+});
+QUnit.test(function (a, b) {
+  console.assert(a === 10, 'qunit test has first argument "a"');
+  console.assert(b === 20, 'qunit test has second argument "b"');
+});
+```
+
+Let me show how easy it is to achieve the second goal using *heroin*. First, let's
+see the minimal QUnit runtime implementation that can collect and execute unit tests
+without any injection
+
+```js
+// test collection
+var modules = [];
+var QUnit = {
+  module: function (name, config) {
+    modules.push({
+      config: config,
+      tests: []
+    });
+  },
+  test: function (fn) {
+    var m = modules[modules.length - 1];
+    m.tests.push(fn); // 1
+  }
+};
+// test execution
+function runQunit() {
+  modules.forEach(function (m) {
+    m.tests.forEach(function (t) {
+      t();
+    });
+  });
+}
+```
+
+All we do is collecting test functions and then running them in `runQunit`.
+Now let's add dynamic dependency injection. This requires single line change
+in line `// 1`
+
+```js
+m.tests.push(heroin(fn, m.config));
+```
+
+By doing this we are injecting module `config` object into each unit tests
+during the collection, making unit tests like `QUnit.test(function (a, b) { ...`
+possible.
 
 ### Small print
 
