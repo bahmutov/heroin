@@ -196,6 +196,9 @@ By doing this we are injecting module `config` object into each unit tests
 during the collection, making unit tests like `QUnit.test(function (a, b) { ...`
 possible.
 
+I implemented a qunit plugin [qunit-inject](https://github.com/bahmutov/qunit-inject)
+to make production grade dependency injection for this wonderful testing framework.
+
 ### Small print
 
 Author: Gleb Bahmutov &copy; 2014
