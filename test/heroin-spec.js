@@ -175,3 +175,63 @@ describe('QUnit example', function () {
     expect(testsRun).to.equal(2);
   });
 });
+
+
+describe('QUnit example with setup method', function () {
+  var modules = [];
+  var QUnit = {
+    module: function (name, config) {
+      modules.push({
+        config: config,
+        tests: []
+      });
+    },
+    test: function (fn) {
+      var m = modules[modules.length - 1];
+      expect(m).not.to.be(undefined);
+      expect(m.config).to.be.an('object');
+      m.tests.push(heroin(fn, m.config));
+    }
+  };
+
+  QUnit.module('example', {
+    a: 10,
+    b: 20,
+    setup: function () {
+      this.a = 500;
+    }
+  });
+
+  QUnit.test(function (b) {
+    console.assert(b === 20, 'b value is injected');
+  });
+
+  QUnit.test(function (a, b) {
+    console.assert(a === 500, 'qunit test has first argument "a" changed by setup');
+    console.assert(b === 20, 'qunit test has second argument "b"');
+  });
+
+  function runQunit() {
+    var counter = 0;
+    modules.forEach(function (m) {
+      expect(m.config).to.be.an('object');
+      expect(m.tests).to.be.an('array');
+      m.tests.forEach(function (t) {
+        expect(t).to.be.a('function');
+        if (typeof m.config.setup === 'function') {
+          m.config.setup();
+        }
+        t();
+        counter += 1;
+      });
+    });
+
+    return counter;
+  }
+
+  it('runs qunit tests and injects module config arguments', function () {
+    expect(modules.length).to.equal(1);
+    var testsRun = runQunit();
+    expect(testsRun).to.equal(2);
+  });
+});
