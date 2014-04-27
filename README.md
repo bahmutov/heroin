@@ -91,6 +91,9 @@ QUnit.test(function (log, assert) {
 });
 ```
 
+Read more about partial dependency injection in my blog post
+[Partial Dependency Injection](http://bahmutov.calepin.co/partial-dependency-injection.html)
+
 ## 2 injection points - removed
 
 I have removed the runtime dependency injection, instead allowing partial dependency injection.
