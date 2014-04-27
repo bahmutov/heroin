@@ -60,57 +60,76 @@ heroin(foo, 'getName', dependencies);
 foo.getName(); // 'foo'
 ```
 
-### 2 injection points
+## partial dependency injection
 
-Heroin can inject dependencies during the proxy creation (when you call `heroin` on a function),
-and during the function execution (when you call the proxy function)
+If the provided dependency object does not have own property for some argument name,
+it remains a free argument to the returned function. For example
 
 ```js
-function add(a, b) { return a + b; }
+function add(a, b, c) { return a + b + c; }
 var values = {
   a: 10,
-  b: 22
+  c: 100
 };
 var adder = heroin(add, values);
-var runtimeValues = {
-  b: 500
-};
-adder(runtimeValues); // 510
+// adder = function(a = 10, b, c = 100) ...
+adder(4); // 114
 ```
+
+This is useful if you plan to inject some common environment variables into the function,
+while leaving the rest call-specific:
+
+```js
+QUnit.module('add', {
+  setup: function () {
+    this.log = function (value) { console.log(value); }
+  }
+})l
+QUnit.test(function (log, assert) {
+  // log is injected by module setup,
+  // assert is an argument from QUnit framework
+});
+```
+
+## 2 injection points - removed
+
+I have removed the runtime dependency injection, instead allowing partial dependency injection.
+For historical purposes, here is what 2 injection points had:
+
+    Heroin can inject dependencies during the proxy creation (when you call `heroin` on a function),
+    and during the function execution (when you call the proxy function)
+
+        function add(a, b) { return a + b; }
+        var values = {
+          a: 10,
+          b: 22
+        };
+        var adder = heroin(add, values);
+        var runtimeValues = {
+          b: 500
+        };
+        adder(runtimeValues); // 510
 
 ## Details
 
 ### Argument order does not matter
 
+Let's inject `name` and `message`, while leaving `log` a free argument
+
 ```js
-getName: function (name, message) {
-  return name + ': ' + message;
+getName: function (log, name, message) {
+  log(name + ': ' + message);
 }
 var dependencies = {
   name: 'foo',
   message: 'hello'
 };
 heroin(foo, 'getName', dependencies);
-foo.getName(); // 'foo hello'
+foo.getName(console.log); // prints 'foo hello'
 ```
 
-### Combined dependencies
-
-You can inject some dependencies right away, and inject others
-at the call.
-
-```js
-var dependencies = {
-  name: 'foo',
-  message: 'hello'
-};
-heroin(foo, 'getName', {
-  name: 'foo'
-});
-foo.getName({
-  message: 'hi'
-}); // 'foo hi'
-```
+Or we could list arguments in different order, the result is the same
+`getName: function (name, message, log) {`
 
 ## Why?
 
@@ -149,9 +168,9 @@ QUnit.module('example', {
   a: 10,
   b: 20
 });
-QUnit.test(function (a, b) {
-  console.assert(a === 10, 'qunit test has first argument "a"');
-  console.assert(b === 20, 'qunit test has second argument "b"');
+QUnit.test(function (a, b, assert) {
+  assert(a === 10, 'qunit test has first argument "a"');
+  assert(b === 20, 'qunit test has second argument "b"');
 });
 ```
 
@@ -178,7 +197,7 @@ var QUnit = {
 function runQunit() {
   modules.forEach(function (m) {
     m.tests.forEach(function (t) {
-      t();
+      t(console.assert);
     });
   });
 }

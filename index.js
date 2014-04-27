@@ -1,6 +1,4 @@
 var expect = require('expect.js');
-var clone = require('lodash.clone');
-var extend = require('lodash.assign');
 
 function getExpectedArguments(fn) {
   expect(fn).to.be.a('function');
@@ -38,12 +36,14 @@ function heroin(obj, methodName, dependencies) {
   expect(expected).to.be.an('array');
   // console.log('expected', expected);
 
-  var proxy = function (runTimeDependencies) {
-    runTimeDependencies = clone(runTimeDependencies) || {};
-    var deps = extend(dependencies, runTimeDependencies);
-    // console.log('deps', deps);
+  var proxy = function () {
+    var runtimeArgs = Array.prototype.slice.call(arguments, 0);
     var parameters = expected.map(function (name) {
-      return deps[name];
+      if (dependencies.hasOwnProperty(name)) {
+        return dependencies[name];
+      } else {
+        return runtimeArgs.shift();
+      }
     });
     // console.log('parameters', parameters);
     return original.apply(obj, parameters);

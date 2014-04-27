@@ -1,16 +1,14 @@
 {
   "name": "heroin",
   "description": "Dependency injection done right",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
   "bugs": {
     "url": "https://github.com/bahmutov/heroin/issues"
   },
   "contributors": [],
   "dependencies": {
-    "expect.js": "^0.3.1",
-    "lodash.assign": "^2.4.1",
-    "lodash.clone": "^2.4.1"
+    "expect.js": "^0.3.1"
   },
   "devDependencies": {
     "grunt": "^0.4.4",
