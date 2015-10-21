@@ -21,7 +21,7 @@
     "lodash": "3.10.1",
     "matchdep": "1.0.0",
     "pre-git": "0.6.2",
-    "time-grunt": "1.2.1"
+    "time-grunt": "1.2.2"
   },
   "engines": {
     "node": "> 0.8"
