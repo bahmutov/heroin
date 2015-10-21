@@ -1,11 +1,11 @@
-var expect = require('expect.js');
+// var expect = require('expect.js');
 
 function getExpectedArguments(fn) {
-  expect(fn).to.be.a('function');
+  // expect(fn).to.be.a('function');
 
   var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
   var text = fn.toString();
-  expect(text).to.be.a('string');
+  // expect(text).to.be.a('string');
   var args = text.match(FN_ARGS)[1].split(',');
   args = args.map(function (name) {
     return name.trim();
@@ -20,20 +20,21 @@ function heroin(obj, methodName, dependencies) {
     original = obj;
     dependencies = methodName;
   } else {
-    expect(obj).to.be.an('object');
-    expect(methodName).to.be.a('string');
+    // expect(obj).to.be.an('object');
+    // expect(methodName).to.be.a('string');
     original = obj[methodName];
   }
 
+  /*
   if (dependencies) {
     expect(dependencies).to.be.an('object');
-  }
+  }*/
   dependencies = dependencies || {};
 
-  expect(original).to.be.a('function');
+  // expect(original).to.be.a('function');
 
   var expected = getExpectedArguments(original);
-  expect(expected).to.be.an('array');
+  // expect(expected).to.be.an('array');
   // console.log('expected', expected);
 
   var proxy = function () {
