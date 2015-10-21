@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>heroin</title>
+  <style>
+  #code {
+    margin: 10px 0px;
+    display: block;
+    white-space: pre;
+    font-family: monospace;
+  }
+  </style>
+</head>
+<body>
+  <script src="../index.js"></script>
+  <script src="https://rawgit.com/bahmutov/console-log-div/master/console-log-div.js"></script>
+  <script id="code">
+  console.assert(typeof heroin === 'function', 'cannot find heroin');
+  function add(a, b) { return a + b; }
+  var sum = heroin(add, { a: 10, b: 2 })();
+  console.log('10 + 2 =', sum);
+  </script>
+</body>
+</html>
