@@ -23,6 +23,14 @@ module.exports = function (grunt) {
       }
     },
 
+    'clean-console': {
+      all: {
+        options: {
+          url: 'test/index.html'
+        }
+      }
+    },
+
     watch: {
       options: {
         atBegin: true
