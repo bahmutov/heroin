@@ -6,6 +6,20 @@
   "bugs": {
     "url": "https://github.com/bahmutov/heroin/issues"
   },
+  "config": {
+    "pre-git": {
+      "commit-msg": "validate-commit-msg",
+      "pre-commit": [
+        "npm test"
+      ],
+      "pre-push": [
+        "npm run size",
+        "npm run pkgfiles"
+      ],
+      "post-commit": [],
+      "post-merge": []
+    }
+  },
   "contributors": [],
   "dependencies": {},
   "devDependencies": {
@@ -21,13 +35,16 @@
     "jshint-stylish": "2.0.1",
     "lodash": "3.10.1",
     "matchdep": "1.0.0",
-    "pkgfiles": "^2.3.0",
-    "pre-git": "^1.3.1",
+    "pkgfiles": "2.3.0",
+    "pre-git": "1.3.1",
     "time-grunt": "1.2.2"
   },
   "engines": {
     "node": "> 0.8"
   },
+  "files": [
+    "index.js"
+  ],
   "homepage": "https://github.com/bahmutov/heroin",
   "keywords": [
     "dependency",
@@ -41,27 +58,10 @@
     "type": "git",
     "url": "git@github.com:bahmutov/heroin.git"
   },
-  "files": [
-    "index.js"
-  ],
   "scripts": {
-    "test": "grunt",
     "commit": "commit-wizard",
     "pkgfiles": "pkgfiles",
-    "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";"
-  },
-  "config": {
-    "pre-git": {
-      "commit-msg": "validate-commit-msg",
-      "pre-commit": [
-        "npm test"
-      ],
-      "pre-push": [
-        "npm run size",
-        "npm run pkgfiles"
-      ],
-      "post-commit": [],
-      "post-merge": []
-    }
+    "size": "tarball=\"$(npm pack .)\"; wc -c \"${tarball}\"; tar tvf \"${tarball}\"; rm \"${tarball}\";",
+    "test": "grunt"
   }
 }
