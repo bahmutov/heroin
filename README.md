@@ -7,6 +7,7 @@
 [![Build status][heroin-ci-image] ][heroin-ci-url]
 [![dependencies][heroin-dependencies-image] ][heroin-dependencies-url]
 [![devdependencies][heroin-devdependencies-image] ][heroin-devdependencies-url]
+[![manpm](https://img.shields.io/badge/manpm-compatible-3399ff.svg)](https://github.com/bahmutov/manpm)
 
 *Heroin* decouples functions and methods from their arguments, making
 dynamic substitution a breeze.
@@ -227,7 +228,7 @@ Author: Gleb Bahmutov &copy; 2014
 
 * [@bahmutov](https://twitter.com/bahmutov)
 * [glebbahmutov.com](http://glebbahmutov.com)
-* [blog](http://bahmutov.calepin.co/)
+* [blog](http://glebbahmutov.com/blog)
 
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
