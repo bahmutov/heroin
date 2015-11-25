@@ -5,9 +5,9 @@
 [![NPM][heroin-icon] ][heroin-url]
 
 [![Build status][heroin-ci-image] ][heroin-ci-url]
+[![manpm](https://img.shields.io/badge/manpm-compatible-3399ff.svg)](https://github.com/bahmutov/manpm)
 [![dependencies][heroin-dependencies-image] ][heroin-dependencies-url]
 [![devdependencies][heroin-devdependencies-image] ][heroin-devdependencies-url]
-[![manpm](https://img.shields.io/badge/manpm-compatible-3399ff.svg)](https://github.com/bahmutov/manpm)
 
 *Heroin* decouples functions and methods from their arguments, making
 dynamic substitution a breeze.
